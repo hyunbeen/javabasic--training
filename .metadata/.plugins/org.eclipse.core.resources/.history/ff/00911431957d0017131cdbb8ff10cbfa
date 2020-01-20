@@ -1,0 +1,26 @@
+package basic;
+
+import java.awt.*;
+
+class Info{
+	//1.멤버변수선언
+	Frame f;
+	//2.객체생성
+	Info(){
+		
+	}
+	
+	//3.화면구성
+	void setDisplay() {
+		
+	}
+}
+
+public class InfoMain {			
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

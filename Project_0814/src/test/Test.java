@@ -1,0 +1,10 @@
+package test;
+
+import java.util.StringTokenizer;
+
+
+class Test  {
+	   public static void main ( String [] args ) {
+	     
+	   }
+	}

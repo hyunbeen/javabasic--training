@@ -1,0 +1,148 @@
+package model;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+
+import model.vo.Customer;
+
+public class CustomerModel {
+
+	Connection con;
+	String searchnum;
+	
+	public CustomerModel() throws Exception{
+		
+		
+		//1.드라이버를 로딩
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		
+		//2.연결 객체 얻어오기
+			String url = "jdbc:oracle:thin:@192.168.0.104:1521:orcl";
+			String user = "AREUM";
+			String pass = "0611";
+			con = DriverManager.getConnection(url, user, pass);
+			System.out.println("연결성공");
+		
+		}
+		 catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("");
+			}
+		
+		
+	}
+	
+	public void insertCustomer(Customer dao) throws Exception{
+		// 3. sql 문장 만들기
+		String sql = "INSERT INTO Cus_info(tel_id ,c_name, s_tel, address,email) VALUES(?,?,?,?,?)";
+		// 4. sql 전송객체 (PreparedStatement)		
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, Integer.parseInt(dao.getCustTel1()));
+		ps.setString(2, dao.getCustName());
+		ps.setInt(3, Integer.parseInt(dao.getCustTel2()));
+		ps.setString(4, dao.getCustAddr());
+		ps.setString(5,dao.getCustEmail());
+	
+		
+		// 5. sql 전송
+		ps.executeUpdate();
+		// 6. 닫기 (PreparedStatement  만 닫기)
+		ps.close();
+
+	}
+	
+	public Customer selectByTel(String tel) throws Exception{
+		Customer dao = new Customer();
+		String sql = "SELECT * FROM Cus_Info Where tel_id = ? or s_tel = ? ";
+		// 4. sql 전송객체 (PreparedStatement)		
+		PreparedStatement ps = con.prepareStatement(sql);
+				
+				ps.setString(1, tel);
+				ps.setString(2, tel);
+				
+				
+			
+				
+				// 5. sql 전송
+				ps.executeQuery();
+				ResultSet r1 = ps.getResultSet();
+				r1.next();
+				dao.setCustAddr(r1.getString("address"));
+				dao.setCustEmail(r1.getString("email"));
+				dao.setCustName(r1.getString("c_name"));
+				dao.setCustTel1(r1.getString("tel_id"));
+				dao.setCustTel2(r1.getString("s_tel"));
+				// 6. 닫기 (PreparedStatement  만 닫기)
+				searchnum = r1.getString("tel_id");
+				ps.close();
+				
+		return dao;
+		
+	}
+	
+	public int updateCustomer(Customer dao) throws Exception{
+		String sql = "Update Cus_info set tel_id=?,c_name=?,s_tel=?,address=?,email=? where tel_id = ? ";
+		int result = 0;
+		System.out.println(searchnum);
+		PreparedStatement ps = con.prepareStatement(sql);
+		
+		ps.setString(1, dao.getCustTel1());
+		ps.setString(2, dao.getCustName());
+		ps.setString(3, dao.getCustTel2());
+		ps.setString(4, dao.getCustAddr());
+		ps.setString(5, dao.getCustEmail());
+		ps.setString(6, searchnum);
+		
+		
+	
+		
+		// 5. sql 전송
+		result = ps.executeUpdate();
+	
+		// 6. 닫기 (PreparedStatement  만 닫기)
+	
+		ps.close();
+		
+		return result;
+	}
+
+	public ResultSet selectByName(String name) throws SQLException {
+		
+		Customer dao = new Customer();
+		String sql = "SELECT * FROM Cus_Info Where c_name = "+"'"+name+"'";
+		// 4. sql 전송객체 (PreparedStatement)		
+		Statement st = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+				
+				
+				
+				
+				
+			
+				
+			
+				
+				ResultSet r1 =st.executeQuery(sql);
+				
+				
+					
+				
+					
+					
+			
+				
+		return r1;
+	}
+	
+
+}
+

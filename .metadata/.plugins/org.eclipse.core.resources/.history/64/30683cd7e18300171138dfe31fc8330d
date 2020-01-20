@@ -1,0 +1,10 @@
+package io;
+
+public class employee {
+	private String empid ;
+	private int empname;
+	private int empnum;
+	private String empgrade;
+	private String empemail;
+	
+}

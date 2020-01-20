@@ -1,0 +1,325 @@
+package posproject;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.StringTokenizer;
+import java.util.Vector;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.AbstractTableModel;
+
+
+
+public class PosLayout extends JFrame{
+   JLabel mrpizza;
+   JLabel[] pizzaLabel = new JLabel[9];
+   
+   JPanel allPane;
+   JPanel mainPane;
+   JPanel psbPane;
+   JPanel menuPane;
+   JPanel movePane;
+   JPanel payPane;
+   JPanel selPane;
+   JPanel payPane2;
+   JPanel[] selPizzaPane = new JPanel[9];
+   
+   JButton bPizza, bSide, bBev;   //피자, 사이드, 음료 버튼
+   JButton[] selPizza = new JButton[9]; //피자 종류버튼
+   JButton bPrev, bNext; //이전, 다음 버튼
+   JButton bPay;//결제버튼
+   
+   JTable tbl;
+   TModel model;
+   
+   JTextField tfPrice;
+   
+   PosLayout(){
+      super("Mr.Pizza");
+      mrpizza = new JLabel(new ImageIcon("src/imgs/logo.PNG"));
+      allPane = new JPanel();
+      mainPane = new JPanel();
+      payPane = new JPanel();
+      selPane = new JPanel();
+      psbPane = new JPanel();
+      menuPane = new JPanel();
+      movePane = new JPanel();
+      payPane2 = new JPanel();
+      
+      for(int i = 0; i <9;i++) {
+      selPizzaPane[i] = new JPanel();
+      selPizza[i] = new JButton();
+      pizzaLabel[i] = new JLabel("이름 : 고르곤졸라 가격 : 15000");
+      }
+      bPizza = new JButton("피자");
+      bSide = new JButton("사이드");
+      bBev = new JButton("음료");
+      
+      bPrev = new JButton("◀");
+      bNext = new JButton("▶");
+      bPay = new JButton("결제");
+      
+      model = new TModel();
+      tbl = new JTable(model);
+      tfPrice = new JTextField(15);
+   }
+   void setUI() {
+      setLayout(new BorderLayout());
+      setDefaultCloseOperation(EXIT_ON_CLOSE);
+      add(allPane,BorderLayout.CENTER);
+      allPane.setLayout(new BorderLayout());
+      allPane.setBackground(Color.WHITE);
+      allPane.add(mrpizza, BorderLayout.NORTH);
+      allPane.add(mainPane,BorderLayout.CENTER);
+      
+      mainPane.setBackground(Color.WHITE);
+      mainPane.setLayout(new GridLayout(1,2));
+      mainPane.add(payPane);
+      mainPane.add(selPane);
+      
+      payPane.setLayout(new BorderLayout());
+      payPane.add(new JScrollPane(tbl), BorderLayout.CENTER);
+      payPane.add(payPane2, BorderLayout.SOUTH);
+      payPane2.setBackground(Color.WHITE);
+      payPane2.add(tfPrice);
+      payPane2.add(bPay);
+      
+      bPay.setBackground(Color.WHITE);
+      
+      selPane.setBackground(Color.WHITE);
+      selPane.setLayout(new BorderLayout());
+      selPane.add(psbPane,BorderLayout.NORTH);
+      selPane.add(menuPane,BorderLayout.CENTER);
+      selPane.add(movePane,BorderLayout.SOUTH);      
+      
+      psbPane.setBackground(Color.WHITE);
+      psbPane.setLayout(new GridLayout(1,3));
+      psbPane.add(bPizza);
+      psbPane.add(bSide);
+      psbPane.add(bBev);
+      
+      menuPane.setBackground(Color.WHITE);
+      menuPane.setLayout(new GridLayout(3, 3));
+      for(int i = 0; i <9 ; i++) {
+         menuPane.add(selPizzaPane[i]);
+         selPizzaPane[i].setLayout(new BorderLayout());
+         selPizzaPane[i].setBackground(Color.WHITE);
+         selPizzaPane[i].add(selPizza[i],BorderLayout.CENTER);
+         selPizzaPane[i].add(pizzaLabel[i],BorderLayout.SOUTH);
+      }
+      for(int i = 0; i <3; i++) {
+      selPizza[i].setIcon(new ImageIcon("src/imgs/고르곤졸라.png"));
+      }
+      for(int i = 3; i <6; i++) {
+      selPizza[i].setIcon(new ImageIcon("src/imgs/따블퐈.png"));
+      }
+      for(int i = 6; i<9;i++) {
+      selPizza[i].setIcon(new ImageIcon("src/imgs/불닭신화.png"));
+      }
+      
+      
+      movePane.setBackground(Color.WHITE);
+      movePane.setLayout(new GridLayout(1,3));
+      movePane.add(bPrev);
+      movePane.add(new JPanel());
+      movePane.add(bNext);
+      
+      
+
+      setSize(1200,700);
+      setVisible(true);
+   }
+   
+   void evtproc() {
+	  
+	   for(int i=0;i<9;i++)
+	   selPizza[i].addActionListener(new BtnHdlr());
+	   bPizza.addActionListener(new BtnHdlr());
+	   bSide.addActionListener(new BtnHdlr());
+	   bBev.addActionListener(new BtnHdlr());
+   }
+   
+   class BtnHdlr implements ActionListener
+   {
+	private int input = 0;
+   	public void actionPerformed(ActionEvent ev) {
+   	JButton evt = (JButton)ev.getSource();
+   	Vector data = new Vector();
+   	//selnum[100] 초기화 0으로  때린다
+   	//input index 
+   	
+   	for(int i=0;i<9;i++) {
+   		if(evt == selPizza[i]) {
+   			
+   				
+   				//Vector temp = new Vector();
+   				
+   				StringTokenizer st = new StringTokenizer(" ",pizzaLabel[i].getText());
+   				st.nextToken();
+   				st.nextToken();
+   				String name = st.nextToken();
+   				//temp.add(name);
+   				System.out.println(name);
+   				
+   				
+   				st.nextToken();
+   				st.nextToken();
+   				System.out.println(st.nextToken());
+   				//temp.add(st.nextToken());
+   				//temp.add("1");
+   				//temp.add(" ");
+   				
+   				//data.add(temp);
+   				
+   				model.data = data;
+   				tbl.setModel(model);
+   				model.fireTableDataChanged();
+   				
+   		}
+   		
+   		}
+   	
+   	if(evt == bPizza) {
+   		
+   		selPizza[0].setIcon(new ImageIcon());
+   		pizzaLabel[0].setText("");
+   		selPizza[1].setIcon(new ImageIcon());
+   		pizzaLabel[1].setText("");
+   		selPizza[2].setIcon(new ImageIcon());
+   		pizzaLabel[2].setText("");
+   		selPizza[3].setIcon(new ImageIcon());
+   		pizzaLabel[3].setText("");
+   		selPizza[4].setIcon(new ImageIcon());
+   		pizzaLabel[4].setText("");
+   		selPizza[5].setIcon(new ImageIcon());
+   		pizzaLabel[5].setText("");
+   		selPizza[6].setIcon(new ImageIcon());
+   		pizzaLabel[6].setText("");
+   		selPizza[7].setIcon(new ImageIcon());
+   		pizzaLabel[7].setText("");
+   		selPizza[8].setIcon(new ImageIcon());
+   		pizzaLabel[8].setText("");
+   	}
+   	
+   	if(evt == bSide) {
+   		
+   		
+   		
+   		selPizza[0].setIcon(new ImageIcon());
+   		pizzaLabel[0].setText("");
+   		selPizza[1].setIcon(new ImageIcon());
+   		pizzaLabel[1].setText("");
+   		selPizza[2].setIcon(new ImageIcon());
+   		pizzaLabel[2].setText("");
+   		selPizza[3].setIcon(new ImageIcon());
+   		pizzaLabel[3].setText("");
+   		selPizza[4].setIcon(new ImageIcon());
+   		pizzaLabel[4].setText("");
+   		selPizza[5].setIcon(new ImageIcon());
+   		pizzaLabel[5].setText("");
+   		selPizza[6].setIcon(new ImageIcon());
+   		pizzaLabel[6].setText("");
+   		selPizza[7].setIcon(new ImageIcon());
+   		pizzaLabel[7].setText("");
+   		selPizza[8].setIcon(new ImageIcon());
+   		pizzaLabel[8].setText("");
+   	}
+   	
+   	if(evt == bBev) {
+   		selPizza[0].setIcon(new ImageIcon());
+   		pizzaLabel[0].setText("");
+   		selPizza[1].setIcon(new ImageIcon());
+   		pizzaLabel[1].setText("");
+   		selPizza[2].setIcon(new ImageIcon());
+   		pizzaLabel[2].setText("");
+   		selPizza[3].setIcon(new ImageIcon());
+   		pizzaLabel[3].setText("");
+   		selPizza[4].setIcon(new ImageIcon());
+   		pizzaLabel[4].setText("");
+   		selPizza[5].setIcon(new ImageIcon());
+   		pizzaLabel[5].setText("");
+   		selPizza[6].setIcon(new ImageIcon());
+   		pizzaLabel[6].setText("");
+   		selPizza[7].setIcon(new ImageIcon());
+   		pizzaLabel[7].setText("");
+   		selPizza[8].setIcon(new ImageIcon());
+   		pizzaLabel[8].setText("");
+   	}
+   	
+   	if(evt == bPay )
+   	{
+   	
+   	}
+   	if(evt == bPrev) {
+   		
+   	}
+   	
+   	if(evt == bNext) {
+   	
+   			
+   	}
+   	
+   	}
+  }
+   		
+
+
+}
+
+class TModel extends AbstractTableModel{
+	
+	Vector data = new Vector();
+	String [] columnName = {"메뉴명","가격","수량","삭제"};
+	
+	@Override
+	public int getRowCount() {
+		// TODO Auto-generated method stub
+		return data.size();
+	}
+
+	@Override
+	public int getColumnCount() {
+		// TODO Auto-generated method stub
+		return columnName.length;
+	}
+
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		// TODO Auto-generated method stub
+		Vector temp = (Vector)data.get(rowIndex);
+		return temp.get(columnIndex);
+	}
+	
+	//컬럼명을 지정하기
+	public String getColumnName(int col) {
+		return columnName[col];
+	}
+	
+	// 각 셀의 편집모드로 변경
+	public boolean isCellEditable(int row,int col) {
+		if(col==3) return true;
+		else return false;
+	}
+	
+	public void setValueAt(Object value,int row, int col) {
+		Vector temp = (Vector)data.get(row);
+		temp.set(col, value);
+		fireTableCellUpdated(row, col);
+	}
+	
+	//각 셀을 클래스 별로 변경
+//	public Class getColumnClass(int c) {
+//		return getValueAt(0,c).getClass();
+//	}
+}
+

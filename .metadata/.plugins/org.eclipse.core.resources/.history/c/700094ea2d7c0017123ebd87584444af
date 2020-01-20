@@ -1,0 +1,90 @@
+package project;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
+public class BookTable {
+	private int booknum;
+	private String bookname;
+	private String bookauth;
+	private boolean loan;
+	
+	public BookTable(){
+		
+	}
+	
+	public BookTable(int booknum,String bookname,String bookauth) {
+		this.booknum = booknum;
+		this.bookname = bookname;
+		this.bookauth = bookauth;
+	}
+	public BookTable(int booknum) {
+		
+		this.booknum = booknum;
+		this.bookname = "무제";
+		this.bookauth = "작가미상";
+	}
+	
+	public void setLoan(boolean loan) {
+		this.loan = loan;
+	}
+	public BookTable input(Scanner sc) {
+		
+		BookTable e = new BookTable();
+		String str = sc.nextLine();
+		StringTokenizer st = new StringTokenizer(str," ");
+		e.booknum = Integer.parseInt(st.nextToken());
+		e.bookname = st.nextToken();
+		e.bookauth = st.nextToken();
+		e.loan = Boolean.valueOf(st.nextToken());
+		return e;
+	}
+	
+	
+
+	
+	public int getBooknum() {
+		return booknum;
+	}
+
+	public String getBookname() {
+		return bookname;
+	}
+
+	public String getBookauth() {
+		return bookauth;
+	}
+
+	public boolean isLoan() {
+		return loan;
+	}
+
+	public void output() {
+		System.out.println("책의 책번호 : "+booknum+" 책제목 : "+bookname+" 책저자 : "+bookauth+" 책 대출여부 : "+loan);
+	}
+	
+	public ArrayList datainput(Scanner sc) {
+		ArrayList<BookTable> arr = new ArrayList<BookTable>();
+		boolean condition =false;
+		BookTable b1 = new BookTable();
+		
+		System.out.print("입력을 받으시겠습니까? ");
+		condition = sc.nextBoolean();
+		sc.nextLine();
+		
+		while(condition){
+			System.out.println("입력");
+			b1=b1.input(sc);
+			arr.add(b1);
+			
+			System.out.print("입력을 받으시겠습니까? ");
+			condition = sc.nextBoolean();
+			sc.nextLine();
+		};
+		return arr;
+	}
+	
+
+	
+}

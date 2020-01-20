@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;transaction.as.java&apos; to &apos;MyPanel.java&apos;&#x0D;&#x0A;- Original project: &apos;Project_0901&apos;&#x0D;&#x0A;- Original element: &apos;transaction.as.java&apos;&#x0D;&#x0A;- Renamed element: &apos;transaction.MyPanel.java&apos;" description="Rename compilation unit &apos;as.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;transaction{as.java" name="MyPanel.java" references="false" stamp="1504784632335" version="1.0"/>
+</session>

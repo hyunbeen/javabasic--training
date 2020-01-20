@@ -1,0 +1,92 @@
+package basic;
+
+import java.awt.*;
+
+class Info{
+	//1.멤버변수선언
+	Frame f;
+	Button bInput;
+	Button bModify;
+	Button bDelete;
+	Button bShow;
+	Button bExit;
+	Label LName;
+	Label LTel;
+	Label LJumin;
+	Label LAge;
+	Label LNHome;
+	Label LGender;
+	TextArea ta;
+	TextField t1;
+	TextField t2;
+	TextField t3;
+	TextField t4;
+	TextField t5;
+	TextField t6;
+	
+	//2.객체생성
+	Info(){
+		f = new Frame();
+		bInput = new Button("입력");
+		bModify = new Button("수정");
+		bDelete = new Button("삭제");
+		bShow = new Button("전체보기");
+		bExit = new Button("종료");
+		LName = new Label("이름");
+		LTel = new Label("전화");
+		LJumin = new Label("주민번호");
+		LAge = new Label("나이");
+		LNHome = new Label("출신");
+		LGender = new Label("성별");
+		ta = new TextArea();
+		t1 = new TextField();
+		t2 = new TextField();
+		t3 = new TextField();
+		t4 = new TextField();
+		t5 = new TextField();
+		t6 = new TextField();
+		
+	}
+	
+	//3.화면구성
+	void setDisplay() {
+		f.setLayout(new BorderLayout());
+		f.add(ta,BorderLayout.CENTER);
+		Panel p = new Panel();
+		p.setLayout(new GridLayout(6,2));
+		p.add(LName);
+		p.add(t1);
+		p.add(LTel);
+		p.add(t2);
+		p.add(LJumin);
+		p.add(t3);
+		p.add(LAge);
+		p.add(t4);
+		p.add(LNHome);
+		p.add(t5);
+		p.add(LGender);
+		p.add(t6);
+		f.add(p,BorderLayout.WEST);
+		Panel p1 = new Panel();
+		p1.setLayout(new GridLayout(1,5));
+		p1.add(bInput);
+		p1.add(bModify);
+		p1.add(bDelete);
+		p1.add(bShow);
+		p1.add(bExit);
+		f.add(p1,BorderLayout.SOUTH);
+		f.setSize(600,500);
+		f.setVisible(true);
+		
+	}
+}
+
+public class InfoMain {			
+
+	public static void main(String[] args) {
+		Info info = new Info();
+		info.setDisplay();
+
+	}
+
+}

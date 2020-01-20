@@ -1,0 +1,38 @@
+package transaction;
+
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.MalformedURLException;
+
+import javax.swing.*;
+
+class MyPanel extends JPanel
+{ 
+	Image image; 
+	MyPanel()throws MalformedURLException
+		{ 
+			image = Toolkit.getDefaultToolkit().createImage("src/img/햄버거.gif"); 
+		} 
+	public void paintComponent(Graphics g) 
+		{ 
+			super.paintComponent(g); 
+			if (image != null)
+			{ g.drawImage(image, 0, 0, this); } } 
+	
+	public static void main(String[] args) {
+		try {
+			MyPanel mp = new MyPanel();
+			JFrame f = new JFrame();
+			f.add(mp);
+			f.setSize(500, 500);
+			f.setVisible(true);
+			
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+}
+

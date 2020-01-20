@@ -1,0 +1,236 @@
+package basic;
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+class Info{
+	//1.멤버변수선언
+	JFrame f;
+	
+	JButton bInput;
+	JButton bModify;
+	JButton bDelete;
+	JButton bShow;
+	JButton bExit;
+	
+	JLabel LName;
+	JLabel LTel;
+	JLabel LJumin;
+	JLabel LAge;
+	JLabel LNHome;
+	JLabel LGender;
+	
+	JTextArea ta;
+	
+	JTextField t1;
+	JTextField t2;
+	JTextField t3;
+	JTextField t4;
+	JTextField t5;
+	JTextField t6;
+	
+	JMenu mfile;
+	JMenu mHelp;
+	JMenu m169;
+
+	JMenuItem miNew;
+	JMenuItem miOpen;
+	JMenuItem miSave;
+	JMenuItem miExit;
+	JMenuItem miKosta;
+	JMenuItem miAbout;
+	JMenuItem miFor;
+	
+	JMenuBar mb;
+	
+	
+	
+	
+	//2.객체생성
+	Info(){
+		f = new JFrame();
+		bInput = new JButton("입력",new ImageIcon("src/img/1.png"));
+		bInput.setRolloverIcon(new ImageIcon("src/img/2.png"));
+		bInput.setPressedIcon(new ImageIcon("src/img/3.png"));
+		bInput.setToolTipText("데이터를 저장합니다");
+		bInput.setMnemonic('i');//alt + i 단축키
+		bInput.setSize(200,300);
+		bModify = new JButton("수정");
+		bModify.setSize(200,300);
+		bDelete = new JButton("삭제");
+		bDelete.setSize(200,300);
+		bShow = new JButton("전체보기");
+		bShow.setSize(200,300);
+		bExit = new JButton("종료");
+		bExit.setSize(200,300);
+		LName = new JLabel("이름",new ImageIcon("src/img/4.png"),JLabel.LEFT);
+		LTel = new JLabel("전화");
+		LJumin = new JLabel("주민번호");
+		LAge = new JLabel("나이");
+		LNHome = new JLabel("출신");
+		LGender = new JLabel("성별");
+		
+		ta = new JTextArea();
+		t1 = new JTextField();
+		t2 = new JTextField();
+		t3 = new JTextField();
+		t4 = new JTextField();
+		t5 = new JTextField();
+		t6 = new JTextField();
+		
+		mfile = new JMenu("파일");
+		mHelp = new JMenu("도움말");
+		m169 = new JMenu("169");
+
+		miNew = new JMenuItem("새파일");
+		miOpen = new JMenuItem("열기");
+		miSave = new JMenuItem("저장");
+		miExit = new JMenuItem("끝내기");
+		miKosta = new JMenuItem("코스타");
+		miAbout = new JMenuItem("관하여");
+		miFor = new JMenuItem("위하여");
+		
+		mb = new JMenuBar();
+		
+		
+	}
+	
+	//3.화면구성
+	void setDisplay() {
+		f.setLayout(new BorderLayout());
+		f.add(ta,BorderLayout.EAST);
+		Panel p = new Panel();
+		p.setLayout(new GridLayout(6,2));
+		p.add(LName);
+		p.add(t1);
+		p.add(LTel);
+		p.add(t2);
+		p.add(LJumin);
+		p.add(t3);
+		p.add(LAge);
+		p.add(t4);
+		p.add(LNHome);
+		p.add(t5);
+		p.add(LGender);
+		p.add(t6);
+		f.add(p,BorderLayout.WEST);
+		Panel p1 = new Panel();
+		p1.setLayout(new GridLayout(1,5));
+		p1.add(bInput);
+		p1.add(bModify);
+		p1.add(bDelete);
+		p1.add(bShow);
+		p1.add(bExit);
+		f.add(p1,BorderLayout.SOUTH);
+		
+		mfile.add(miNew);
+		mfile.add(miOpen);
+		mfile.add(miSave);
+		mfile.add(miExit);
+		
+		mHelp.add(miKosta);
+		mHelp.add(m169);
+		
+		m169.add(miAbout);
+		m169.add(miFor);
+
+		mb.add(mfile);
+		mb.add(mHelp);
+		
+		//f.setJMenuBar(mb);
+		f.add(mb,BorderLayout.NORTH);
+		f.setSize(600,500);
+		f.setVisible(true);
+	}
+	
+	//4.이벤트 처리
+	void eventProc() {
+		//Evn evn = new Evn();
+		//bExit.addActionListener(evn);
+		//bExit.addActionListener(new Evn());
+//		bExit.addActionListener(new ActionListener(){
+//
+//			
+//			public void actionPerformed(ActionEvent e) {
+//				System.exit(0);
+//			}
+//			//이벤트 핸들러
+//		});
+//		
+//		miExit.addActionListener(new ActionListener(){
+//
+//			
+//			public void actionPerformed(ActionEvent e) {
+//				System.exit(0);
+//			}
+//			//이벤트 핸들러
+//		});
+//		
+//		t2.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e)
+//			{
+//				String tel = t2.getText();
+//				if(tel.equals("010-5097-9559")) {
+//					t1.setText("이현빈");
+//				}else
+//				{
+//					JOptionPane.showMessageDialog(null, "본인 번호가 아닙니다");
+//				}
+//			}
+//		});
+		BtnHdlr bh = new BtnHdlr();
+		bInput.addActionListener(bh);
+		//주민번호 입력창에서 포커스를 잃었을때
+		t3.addFocusListener(new FocusListener() {
+			public void focusLost(FocusEvent e) {
+				JOptionPane.showMessageDialog(null, "포커스잃음");
+				//해당 주민번호에서 성별과 출신도와 나이를 해당 텍스트필드 출력
+			}
+			public void focusGained(FocusEvent e) {
+				JOptionPane.showMessageDialog(null, "포커스얻음");
+			}
+		});
+		
+		f.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+			JOptionPane.showMessageDialog(null, "바이");
+			System.exit(0);
+			
+			}
+		});
+		
+	}
+	
+	class BtnHdlr implements ActionListener
+	{
+		public void actionPerformed(ActionEvent ev) {
+		JButton evt = (JButton)ev.getSource();
+		if(evt==bInput) {
+			JOptionPane.showMessageDialog(null, "데이타를 입력합니다.");
+		}else if(evt == bExit) {
+			System.exit(0);
+		}
+		}
+	}
+	
+//	class Evn implements ActionListener{
+//
+//		
+//		public void actionPerformed(ActionEvent e) {
+//			JOptionPane.showMessageDialog(null, "아싸 이벤트");
+//		}
+//		//이벤트 핸들러
+//	}
+
+}//end of Info class
+	
+public class InfoMain {			
+
+	public static void main(String[] args) {
+		Info info = new Info();
+		info.setDisplay();
+		info.eventProc();
+	}
+
+}

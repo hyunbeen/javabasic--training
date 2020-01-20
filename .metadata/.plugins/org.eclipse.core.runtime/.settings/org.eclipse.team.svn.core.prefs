@@ -1,0 +1,5 @@
+eclipse.preferences.version=1
+externalMigrateFromAuthorizationDatabase/isMigrated=true
+migrateFromAuthorizationDatabase/isMigrated=true
+repositories/10bbb24d5d9300171177ae4ea7aee534=10bbb24d5d9300171177ae4ea7aee534;https\://192.168.0.104\:443/svn/test_svn;https\://192.168.0.104\:443/svn/test_svn;branches;tags;trunk;true;e279ca56-ed74-4f42-b1b1-9d4cab04c5ee;https\://192.168.0.104/svn/test_svn;;false;;;0
+synch_info/contigous=true
